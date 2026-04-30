@@ -1,0 +1,29 @@
+<h1>Add Fuel Record</h1>
+
+<form action="/records" method="POST">
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+  <label for="date">Date</label>
+  <input id="date" type="date" name="date" required>
+
+  <label for="vehicleType">Vehicle Type</label>
+  <select id="vehicleType" name="vehicleType" required>
+    <option value="Car">Car</option>
+    <option value="Motorcycle">Motorcycle</option>
+  </select>
+
+  <label for="liters">Liters</label>
+  <input id="liters" type="number" step="0.01" min="0.01" name="liters" required>
+
+  <label for="distanceKm">Distance Traveled km</label>
+  <input id="distanceKm" type="number" step="0.01" min="0" name="distanceKm" required>
+
+  <label for="totalCost">Total Cost</label>
+  <input id="totalCost" type="number" step="0.01" min="0" name="totalCost" required>
+
+  <button type="submit">Save Record</button>
+</form>
+
+<p>
+  <a href="/records">Back to dashboard</a>
+</p>
