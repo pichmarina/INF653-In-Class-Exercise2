@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "userId": 2,
+    "date": "2026-04-30",
+    "vehicleType": "Car",
+    "liters": 40,
+    "distanceKm": 40,
+    "totalCost": 70
+  }
+]

@@ -23,7 +23,7 @@ router.post("/login", csrfProtection, redirectIfLoggedIn, authController.login);
 
 router.post("/logout", csrfProtection, requireSessionAuth, authController.logout);
 
-router.get("/records", requireSessionAuth, recordController.index);
+router.get("/records", csrfProtection, requireSessionAuth, recordController.index);
 router.get("/records/add", csrfProtection, requireSessionAuth, recordController.showAddForm);
 router.post("/records", csrfProtection, requireSessionAuth, recordController.create);
 router.get("/records/:id/edit", csrfProtection, requireSessionAuth, recordController.showEditForm);
