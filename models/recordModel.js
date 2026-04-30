@@ -1,4 +1,30 @@
-const records = [];
+const fs = require("fs");
+const path = require("path");
+
+const dataDir = path.join(__dirname, "..", "data");
+const recordsFile = path.join(dataDir, "records.json");
+
+function loadRecords() {
+  if (!fs.existsSync(recordsFile)) {
+    return [];
+  }
+
+  const fileContent = fs.readFileSync(recordsFile, "utf8");
+
+  if (!fileContent.trim()) {
+    return [];
+  }
+
+  return JSON.parse(fileContent);
+}
+
+function saveRecords(records) {
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir);
+  }
+
+  fs.writeFileSync(recordsFile, JSON.stringify(records, null, 2));
+}
 
 function getWeekKey(dateString) {
   const date = new Date(dateString);
@@ -23,6 +49,8 @@ function calculateKmPerLiter(record) {
 }
 
 function createRecord(userId, data) {
+  const records = loadRecords();
+
   const record = {
     id: records.length + 1,
     userId: Number(userId),
@@ -34,11 +62,14 @@ function createRecord(userId, data) {
   };
 
   records.push(record);
+  saveRecords(records);
 
   return record;
 }
 
 function getRecordsByUser(userId) {
+  const records = loadRecords();
+
   return records
     .filter((record) => record.userId === Number(userId))
     .map((record) => ({
@@ -48,13 +79,20 @@ function getRecordsByUser(userId) {
 }
 
 function findRecordById(userId, id) {
+  const records = loadRecords();
+
   return records.find(
     (record) => record.userId === Number(userId) && record.id === Number(id)
   );
 }
 
 function updateRecord(userId, id, data) {
-  const record = findRecordById(userId, id);
+  const records = loadRecords();
+
+  const record = records.find(
+    (currentRecord) =>
+      currentRecord.userId === Number(userId) && currentRecord.id === Number(id)
+  );
 
   if (!record) {
     return null;
@@ -66,10 +104,14 @@ function updateRecord(userId, id, data) {
   record.distanceKm = Number(data.distanceKm);
   record.totalCost = Number(data.totalCost);
 
+  saveRecords(records);
+
   return record;
 }
 
 function deleteRecord(userId, id) {
+  const records = loadRecords();
+
   const index = records.findIndex(
     (record) => record.userId === Number(userId) && record.id === Number(id)
   );
@@ -79,10 +121,13 @@ function deleteRecord(userId, id) {
   }
 
   records.splice(index, 1);
+  saveRecords(records);
+
   return true;
 }
 
 function getSummaryByUser(userId) {
+  const records = loadRecords();
   const userRecords = records.filter((record) => record.userId === Number(userId));
 
   const weekly = {};
