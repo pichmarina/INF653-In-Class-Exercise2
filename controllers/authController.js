@@ -20,7 +20,9 @@ async function register(req, res) {
     const user = await userModel.createUser({ username, password });
     req.session.userId = user.id;
 
-    res.redirect("/records");
+    req.session.save(() => {
+      res.redirect("/records");
+    });
   } catch (error) {
     res.status(400).render("auth/register", {
       error: error.message,
@@ -47,7 +49,10 @@ async function login(req, res) {
   }
 
   req.session.userId = user.id;
-  res.redirect("/records");
+
+  req.session.save(() => {
+    res.redirect("/records");
+  });
 }
 
 function logout(req, res) {
