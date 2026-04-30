@@ -40,6 +40,17 @@ app.use(
 app.use("/", webRoutes);
 app.use("/api", apiRoutes);
 
+app.use((err, req, res, next) => {
+  if (err.code === "EBADCSRFTOKEN") {
+    req.session.destroy(() => {
+      res.status(403).redirect("/login");
+    });
+    return;
+  }
+
+  next(err);
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
