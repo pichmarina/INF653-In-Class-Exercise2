@@ -1,6 +1,14 @@
-<h1>Add Fuel Record</h1>
+<section class="page-header">
+  <div>
+    <p class="eyebrow">New Entry</p>
+    <h1>Add Fuel Record</h1>
+    <p class="muted">Enter fuel usage, distance, and total spending.</p>
+  </div>
 
-<form action="/records" method="POST">
+  <a class="btn btn-secondary" href="/records">Back to Dashboard</a>
+</section>
+
+<form class="record-form" action="/records" method="POST">
   <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
   <label for="date">Date</label>
@@ -12,18 +20,23 @@
     <option value="Motorcycle">Motorcycle</option>
   </select>
 
-  <label for="liters">Liters</label>
-  <input id="liters" type="number" step="0.01" min="0.01" name="liters" required>
+  <label for="liters">Fuel Amount</label>
+  <div class="input-unit">
+    <input id="liters" type="number" step="0.01" min="0.01" name="liters" placeholder="0.00" required>
+    <span>L</span>
+  </div>
 
-  <label for="distanceKm">Distance Traveled km</label>
-  <input id="distanceKm" type="number" step="0.01" min="0" name="distanceKm" required>
+  <label for="distanceKm">Distance Traveled</label>
+  <div class="input-unit">
+    <input id="distanceKm" type="number" step="0.01" min="0" name="distanceKm" placeholder="0.00" required>
+    <span>km</span>
+  </div>
 
   <label for="totalCost">Total Cost</label>
-  <input id="totalCost" type="number" step="0.01" min="0" name="totalCost" required>
+  <div class="input-unit input-unit--prefix">
+    <span>$</span>
+    <input id="totalCost" type="number" step="0.01" min="0" name="totalCost" placeholder="0.00" required>
+  </div>
 
-  <button type="submit">Save Record</button>
+  <button class="btn btn-primary" type="submit">Save Record</button>
 </form>
-
-<p>
-  <a href="/records">Back to dashboard</a>
-</p>

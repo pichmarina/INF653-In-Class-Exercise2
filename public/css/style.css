@@ -303,3 +303,53 @@ select:focus {
     max-width: 100%;
   }
 }
+.record-form {
+  width: min(620px, 100%);
+}
+
+.input-unit {
+  display: flex;
+  align-items: center;
+  border: 1px solid #bcccdc;
+  border-radius: 6px;
+  background: white;
+  overflow: hidden;
+}
+
+.input-unit input {
+  border: 0;
+  border-radius: 0;
+}
+
+.input-unit input:focus {
+  outline: none;
+}
+
+.input-unit:focus-within {
+  outline: 3px solid #d0ebff;
+  border-color: #2680c2;
+}
+
+.input-unit span {
+  padding: 0 13px;
+  color: #486581;
+  font-weight: 800;
+  background: #f0f4f8;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid #d9e2ec;
+}
+
+.input-unit--prefix span {
+  border-left: 0;
+  border-right: 1px solid #d9e2ec;
+}
+
+.input-unit--prefix input {
+  order: 2;
+}
+
+.input-unit--prefix span {
+  order: 1;
+}
